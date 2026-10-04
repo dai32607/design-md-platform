@@ -1,0 +1,32 @@
+# ===== 构建产物 =====
+backend/target/
+frontend/dist/
+frontend/node_modules/
+node_modules/
+
+# ===== 运行期数据与临时文件 =====
+backend/uploads/
+data/
+*.lock.db
+*.trace.db
+*.temp
+*.log
+*.mv.db
+*.bak
+
+# ===== 打包/构建中间产物 =====
+build/
+temp/
+output/
+tools/runtime21/
+runtime/
+
+# ===== 本地敏感配置（application.yml 内含本地 MySQL 口令，共享前请改环境变量注入）=====
+# backend/src/main/resources/application.yml
+
+# ===== 编辑器 / 系统 =====
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

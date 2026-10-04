@@ -1,0 +1,39 @@
+{
+  "base_url": "http://127.0.0.1:8090",
+  "finished_at": "2026-10-04T23:12:49",
+  "total": 6,
+  "passed": 6,
+  "failed": 0,
+  "results": [
+    {
+      "step": "T1 登录(test/see-local-config)",
+      "pass": true,
+      "detail": "token 已写入 localStorage，进入首页"
+    },
+    {
+      "step": "T2 品牌列表加载",
+      "pass": true,
+      "detail": "品牌卡片数=9，首个=Apple"
+    },
+    {
+      "step": "T3 打开品牌详情",
+      "pass": true,
+      "detail": "URL=http://127.0.0.1:8090/brand/1, 详情品牌=Apple"
+    },
+    {
+      "step": "T4 mock AI 生成",
+      "pass": true,
+      "detail": "品牌=冒烟测试品牌231247, 结果标签=MOCK 演示模式, Token数已在描述项"
+    },
+    {
+      "step": "T5 admin 登录",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "step": "T6 查看统计页",
+      "pass": true,
+      "detail": "统计卡片=4, 图表卡=3, canvas=3"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+# ============================================================
+# 离线演示包专用配置（demo profile）
+# 启动方式：java -jar design-md-platform.jar --spring.profiles.active=demo
+# 特性：H2 内嵌文件数据库（包内 data/ 目录持久化），不依赖 MySQL、不联网
+# 注意：不影响默认 profile 的 MySQL 本地开发配置（application.yml）
+# ============================================================
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    # 数据文件位于启动目录下的 data/design_db.mv.db；user 是 H2 关键字，用 NON_KEYWORDS 放行
+    # AUTO_SERVER 允许同一台机器上多个进程（如 8080 被占用后另起的 8090 实例）共享同一数据文件
+    url: jdbc:h2:file:./data/design_db;NON_KEYWORDS=USER;AUTO_SERVER=TRUE
+    username: sa
+    password: ""
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 10000
+  # 演示数据已预置在 H2 数据文件中，无需每次启动执行 SQL 脚本
+  sql:
+    init:
+      mode: never
+  h2:
+    console:
+      enabled: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+app:
+  # 上传目录（相对启动目录），解析为演示包根目录下的 uploads/
+  upload-dir: uploads
+  # 数据库方言：h2
+  db-type: h2
+  jwt:
+    secret: ${JWT_SECRET:design-md-platform-jwt-secret-key-2026-change-me-in-prod}
+    expiration: 86400000
+
+# 演示包默认不配置 api-key，AI 生成走 mock 模式，离线可用
+llm:
+  base-url: https://api.deepseek.com
+  api-key: ""
+  model: deepseek-chat
+  # 演示环境同样保留超时/重试/降级能力：即使误配 key 导致调用失败，也会降级为本地模板而不报错
+  connect-timeout-ms: 5000
+  read-timeout-ms: 60000
+  max-retries: 2
+  retry-backoff-ms: 800
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    db-config:
+      id-type: auto
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    root: warn
+    com.designmd.platform: info
