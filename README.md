@@ -2,9 +2,9 @@
 
 > 一个以 DESIGN.md 为唯一规范源的设计系统管理平台：AI一句话生成品牌设计规范，自动解析为结构化设计 Token，供页面与组件直接消费。
 
-[![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/ci.yml)
+[![CI](https://github.com/dai32607/design-md-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/dai32607/design-md-platform/actions/workflows/ci.yml)
 
-> 徽章为占位符：推送到 GitHub 后请将 `OWNER/REPO` 替换为实际仓库地址（如 `yourname/design-md-platform`）。
+> 徽章为占位符：推送到 GitHub 后请将 `dai32607/design-md-platform` 替换为实际仓库地址（如 `yourname/design-md-platform`）。
 
 ## 功能特性
 
