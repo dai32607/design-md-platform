@@ -50,8 +50,28 @@ cd backend
 mvn spring-boot:run          # 要求 JDK 17+；建议 JDK 21
 ```
 
-数据库连接在 `backend/src/main/resources/application.yml`：
-`jdbc:mysql://localhost:3306/design_db`。用户名与密码通过环境变量 `MYSQL_USERNAME` / `MYSQL_PASSWORD` 注入，请在本地按实际环境配置，不要沿用示例默认值。
+数据库连接配置在 `backend/src/main/resources/application.yml`，默认连接 `jdbc:mysql://localhost:3306/design_db`；账号密码以占位符形式读取环境变量，仓库内不包含任何真实凭据：
+
+```yaml
+username: ${MYSQL_USERNAME:root}
+password: ${MYSQL_PASSWORD:}
+```
+
+**启动前必须先设置 `MYSQL_USERNAME` 与 `MYSQL_PASSWORD`**，否则会按占位符默认值（用户 `root`、空密码）连接，多数本地 MySQL 环境将直接认证失败：
+
+```powershell
+# Windows PowerShell（当前终端会话生效）
+$env:MYSQL_USERNAME = "root"
+$env:MYSQL_PASSWORD = "<你的 MySQL 密码>"
+```
+
+```bash
+# macOS / Linux
+export MYSQL_USERNAME=root
+export MYSQL_PASSWORD='<你的 MySQL 密码>'
+```
+
+设置后在同一终端会话内执行 `mvn spring-boot:run`；若在 IDE 中启动，请在运行配置的环境变量（Environment variables）中填写这两个变量。
 
 ### 3. 启动前端（端口 3000）
 
