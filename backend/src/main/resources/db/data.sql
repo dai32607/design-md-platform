@@ -9,7 +9,7 @@ INSERT INTO brand (id, name, logo_url, source, website, description) VALUES
 
 -- 默认管理员账号 admin：密码仅以 BCrypt 哈希形式存放，仓库不提供明文；非本地演示环境部署前必须重置密码与 JWT_SECRET
 INSERT INTO `user` (id, username, password, nickname, role) VALUES
-(1, 'admin', '$2b$10$Lcp4GpdKF2iJ8/c9/iDsNOcP9HEiBp0k47IneLxIU3bXyL5MOtBP6', '管理员', 'ADMIN');
+(1, 'admin', '$2b$10$jPRKPV58a9qjw8yHaCWn6uZ5h60S.4PMaeAHQRvwZpLvNmmL.QYQm', '管理员', 'ADMIN');
 
 -- Apple 设计 Token (brand_id=1)
 INSERT INTO design_token (brand_id, category, token_name, token_value, description) VALUES

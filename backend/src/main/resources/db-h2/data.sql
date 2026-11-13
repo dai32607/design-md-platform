@@ -10677,8 +10677,8 @@ Border Radius: 999px
 ALTER TABLE design_file ALTER COLUMN id RESTART WITH 42;
 
 -- user: 4 行
-INSERT INTO user (id, username, password, nickname, role, create_time) VALUES ('1', 'admin', '$2b$10$Lcp4GpdKF2iJ8/c9/iDsNOcP9HEiBp0k47IneLxIU3bXyL5MOtBP6', '管理员', 'ADMIN', '2026-08-13 16:18:54');
-INSERT INTO user (id, username, password, nickname, role, create_time) VALUES ('3', 'test', '$2a$10$Cp/L9rLnmLSYK8loDLb8xOljPOA51G05MGGvaHk3VVKAVdctiyrby', '11111', 'USER', '2026-08-13 22:27:21');
+INSERT INTO user (id, username, password, nickname, role, create_time) VALUES ('1', 'admin', '$2b$10$jPRKPV58a9qjw8yHaCWn6uZ5h60S.4PMaeAHQRvwZpLvNmmL.QYQm', '管理员', 'ADMIN', '2026-08-13 16:18:54');
+INSERT INTO user (id, username, password, nickname, role, create_time) VALUES ('3', 'test', '$2a$10$lIM5.44AM9TnZOKmQBP.Cesp4ggHDJ3RrSO5DdGV7fk1DTZvqx/j.', '11111', 'USER', '2026-08-13 22:27:21');
 INSERT INTO user (id, username, password, nickname, role, create_time) VALUES ('12', 'smktest232016', '$2a$10$5m3ZedkFjQKJgs.A9n5ivumTMzU/kHXE6tJISXcNjGPnEwb32f9Qa', '冒烟测试', 'USER', '2026-09-08 23:20:18');
 INSERT INTO user (id, username, password, nickname, role, create_time) VALUES ('13', 'llmverify', '$2a$10$SeMDNoCzGhcq7MKg6H/TlO/nWt5NEPmcAOb7xwI/uO/1y66AxKzNa', 'LLM验证', 'USER', '2026-09-11 16:38:47');
 ALTER TABLE user ALTER COLUMN id RESTART WITH 14;
