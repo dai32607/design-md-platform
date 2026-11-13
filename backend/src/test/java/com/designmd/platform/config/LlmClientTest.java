@@ -72,9 +72,9 @@ class LlmClientTest {
     @Test
     @DisplayName("mock 模式使用用户指定色板（主色为用户传入色值）")
     void mockModeUsesUserColors() {
-        LlmClient.SpecResult result = mockClient.generateDesignSpecResult("极简科技风品牌", "Aurora", List.of("#123456"));
+        LlmClient.SpecResult result = mockClient.generateDesignSpecResult("极简科技风品牌", "Aurora", List.of("#3366cc"));
 
-        assertThat(result.content()).contains("--color-primary: #123456");
+        assertThat(result.content()).contains("--color-primary: #3366cc");
     }
 
     @Test
@@ -102,9 +102,9 @@ class LlmClientTest {
     @DisplayName("normalizeColors：大小写归一、#RGB 展开、去重并忽略空值")
     void normalizeColors() {
         List<String> normalized = LlmClient.normalizeColors(
-                Arrays.asList("#abc", "#ABC", "#AABBCC", " #123456 ", null, "  "));
+                Arrays.asList("#abc", "#ABC", "#AABBCC", " #3366cc ", null, "  "));
 
-        assertThat(normalized).containsExactly("#AABBCC", "#123456");
+        assertThat(normalized).containsExactly("#AABBCC", "#3366CC");
         assertThat(LlmClient.normalizeColors(null)).isEmpty();
         assertThat(LlmClient.normalizeColors(new ArrayList<>())).isEmpty();
     }
