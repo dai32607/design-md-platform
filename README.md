@@ -40,7 +40,7 @@
 
 - **内含**：前端与后端的编译产物，以及内置的精简 Java 运行时，无需另行安装 JDK、Maven 或 Node.js
 - **使用**：解压后双击「启动演示.bat」，服务就绪后自动打开 `http://localhost:8080`（端口被占用时自动改用 8090），无需任何额外环境配置
-- **演示账号**：普通用户 `test / test123`，管理员 `admin / admin123`
+- **演示账号**：账号名与初始密码随离线包内的《使用说明》（README.txt）一并提供，仓库与公开文档中不列明文密码
 - **无 API Key 也能用**：未配置大模型 API Key 时，AI 生成设计规范功能自动降级为内置演示快照，全流程依然可以完整体验
 - **下载**：[DesignMD-Demo.zip](https://github.com/dai32607/design-md-platform/releases/download/v1.0.0/DesignMD-Demo.zip)
 
@@ -68,7 +68,7 @@ username: ${MYSQL_USERNAME:root}
 password: ${MYSQL_PASSWORD:}
 ```
 
-**启动前必须先设置 `MYSQL_USERNAME` 与 `MYSQL_PASSWORD`**，否则会按占位符默认值（用户 `root`、空密码）连接，多数本地 MySQL 环境将直接认证失败：
+**启动前必须先设置 `MYSQL_USERNAME` 与 `MYSQL_PASSWORD`**：仓库不提供任何数据库默认凭据，未注入环境变量时连接会直接失败（也可在 `application.yml` 中自行覆盖为本地占位配置）：
 
 ```powershell
 # Windows PowerShell（当前终端会话生效）
@@ -96,14 +96,14 @@ npm run dev                  # 访问 http://localhost:3000
 
 ### 4. 演示账号
 
-演示库初始化时内置两个账号，密码以 BCrypt 哈希形式存放在 `backend/src/main/resources/db-h2/data.sql`，不在此处公开：
+演示库初始化时内置两个账号（见下表）。**初始密码不随公开仓库与文档分发**，仅在离线演示包内的《使用说明》（README.txt）中提供；数据库中密码以 BCrypt 哈希形式存放，仓库不包含任何明文密码。
 
 | 账号 | 角色 |
 |---|---|
 | admin | ADMIN（管理后台 / 全量权限） |
 | test | USER（可自建品牌并上传规范） |
 
-> 本地演示建议自行注册普通账号体验（可浏览 system 预置品牌）；如需管理员权限，请按 `data.sql` 中的账号初始化本地密码。任何非本地环境部署前，请务必更换管理员密码与 `JWT_SECRET`。
+> 本地演示建议自行注册普通账号体验（可浏览 system 预置品牌）；如需管理员权限，请使用离线包内《使用说明》提供的初始密码登录后立即重置。任何非本地环境部署前，请务必更换管理员密码与 `JWT_SECRET`。
 
 ## 核心模块
 

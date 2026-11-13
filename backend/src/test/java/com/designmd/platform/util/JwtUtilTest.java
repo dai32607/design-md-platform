@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class JwtUtilTest {
 
-    private static final String SECRET = "design-md-platform-unit-test-secret-key-0123456789";
+    private static final String SECRET = "design-md-platform-unit-test-secret-key-local";
 
     private JwtUtil jwtUtil;
 
@@ -83,7 +83,7 @@ class JwtUtilTest {
     @Test
     @DisplayName("使用其他密钥签发的 token 解析失败返回 null")
     void parseTokenWithWrongSecretReturnsNull() {
-        JwtUtil other = newJwtUtil("another-secret-key-for-unit-test-0123456789", 86400000L);
+        JwtUtil other = newJwtUtil("another-secret-key-for-unit-test-local", 86400000L);
         String token = other.generateToken(7L, "alice", "USER");
 
         assertThat(jwtUtil.parseToken(token)).isNull();

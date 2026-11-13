@@ -56,7 +56,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("register：用户名为空抛 IllegalArgumentException")
     void registerRequiresUsername() {
-        assertThatThrownBy(() -> userService.register("  ", "123456", null))
+        assertThatThrownBy(() -> userService.register("  ", "sample-pass", null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("用户名不能为空");
         verify(userMapper, never()).insert(any());
@@ -76,7 +76,7 @@ class UserServiceImplTest {
     void registerRejectsDuplicatedUsername() {
         when(userMapper.selectOne(any())).thenReturn(user(1L, "alice", "USER"));
 
-        assertThatThrownBy(() -> userService.register("alice", "123456", "Alice"))
+        assertThatThrownBy(() -> userService.register("alice", "sample-pass", "Alice"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("用户名已存在");
         verify(userMapper, never()).insert(any());
@@ -86,9 +86,9 @@ class UserServiceImplTest {
     @DisplayName("register：成功注册默认 USER 角色，昵称缺省时回退为用户名")
     void registerDefaultsRoleAndNickname() {
         when(userMapper.selectOne(any())).thenReturn(null);
-        when(passwordEncoder.encode("123456")).thenReturn("$2a$10$encoded");
+        when(passwordEncoder.encode("sample-pass")).thenReturn("$2a$10$encoded");
 
-        User registered = userService.register("  alice  ", "123456", "  ");
+        User registered = userService.register("  alice  ", "sample-pass", "  ");
 
         assertThat(registered.getUsername()).isEqualTo("alice");
         assertThat(registered.getNickname()).isEqualTo("alice");
@@ -101,7 +101,7 @@ class UserServiceImplTest {
     @DisplayName("login：用户不存在或密码错误统一抛「用户名或密码错误」")
     void loginRejectsWrongCredential() {
         when(userMapper.selectOne(any())).thenReturn(null);
-        assertThatThrownBy(() -> userService.login("alice", "123456"))
+        assertThatThrownBy(() -> userService.login("alice", "sample-pass"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("用户名或密码错误");
 
@@ -116,10 +116,10 @@ class UserServiceImplTest {
     @DisplayName("login：账密正确时返回 JWT 与用户信息")
     void loginIssuesToken() {
         when(userMapper.selectOne(any())).thenReturn(user(7L, "alice", "USER"));
-        when(passwordEncoder.matches("123456", "$2a$10$encoded")).thenReturn(true);
+        when(passwordEncoder.matches("sample-pass", "$2a$10$encoded")).thenReturn(true);
         when(jwtUtil.generateToken(7L, "alice", "USER")).thenReturn("jwt-token");
 
-        Map<String, Object> data = userService.login("alice", "123456");
+        Map<String, Object> data = userService.login("alice", "sample-pass");
 
         assertThat(data).containsEntry("token", "jwt-token");
         assertThat(data.get("user")).isInstanceOf(User.class);
@@ -143,9 +143,9 @@ class UserServiceImplTest {
     @DisplayName("deleteAccount：内置 admin 账号禁止自助注销")
     void deleteAccountProtectsBuiltinAdmin() {
         when(userMapper.selectById(1L)).thenReturn(user(1L, "admin", "ADMIN"));
-        when(passwordEncoder.matches("see-local-config", "$2a$10$encoded")).thenReturn(true);
+        when(passwordEncoder.matches("sample-pass", "$2a$10$encoded")).thenReturn(true);
 
-        assertThatThrownBy(() -> userService.deleteAccount(1L, "see-local-config"))
+        assertThatThrownBy(() -> userService.deleteAccount(1L, "sample-pass"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("内置管理员账号不允许注销");
         verify(userMapper, never()).deleteById(any(Long.class));
@@ -155,9 +155,9 @@ class UserServiceImplTest {
     @DisplayName("deleteAccount：密码正确且非内置账号时删除成功")
     void deleteAccountSucceeds() {
         when(userMapper.selectById(7L)).thenReturn(user(7L, "alice", "USER"));
-        when(passwordEncoder.matches("123456", "$2a$10$encoded")).thenReturn(true);
+        when(passwordEncoder.matches("sample-pass", "$2a$10$encoded")).thenReturn(true);
 
-        userService.deleteAccount(7L, "123456");
+        userService.deleteAccount(7L, "sample-pass");
 
         verify(userMapper).deleteById(7L);
     }

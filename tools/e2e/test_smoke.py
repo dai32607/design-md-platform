@@ -23,6 +23,15 @@ except Exception:
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
 BASE = "http://127.0.0.1:8090"
+# 凭据一律由环境变量注入，仓库不保存任何演示密码：
+#   E2E_USER / E2E_PASSWORD（普通用户）、E2E_ADMIN_PASSWORD（管理员）
+# 未设置时脚本会直接报错退出，请按离线包《使用说明》中的账号自行设置后再运行。
+E2E_USER = os.environ.get("E2E_USER", "test")
+E2E_USER_PWD = os.environ.get("E2E_PASSWORD", "")
+E2E_ADMIN_PWD = os.environ.get("E2E_ADMIN_PASSWORD", "")
+
+if not E2E_USER_PWD or not E2E_ADMIN_PWD:
+    raise SystemExit("缺少登录凭据：请先设置 E2E_PASSWORD 与 E2E_ADMIN_PASSWORD 环境变量（仓库不提供默认密码）")
 # 完整版 Chromium 可执行文件（headless shell 因网络下载受限未装，直接用完整版跑 headless）
 CHROME_EXE = os.environ.get(
     "P6_CHROME_EXE",
@@ -71,13 +80,13 @@ def main():
         ctx = browser.new_context(viewport={"width": 1440, "height": 900}, locale="zh-CN")
         page = ctx.new_page()
 
-        # ---- T1 登录（普通用户 test/see-local-config）----
+        # ---- T1 登录（普通用户，账号与密码由环境变量提供）----
         try:
-            login(page, "test", "see-local-config")
+            login(page, E2E_USER, E2E_USER_PWD)
             page.wait_for_url(lambda u: u.rstrip("/").endswith("/") or u.rstrip("/").endswith("/home") or "/login" not in u, timeout=15000)
-            record("T1 登录(test/see-local-config)", True, "token 已写入 localStorage，进入首页")
+            record("T1 普通用户登录", True, "token 已写入 localStorage，进入首页")
         except Exception as e:
-            record("T1 登录(test/see-local-config)", False, "异常: %s" % str(e)[:200])
+            record("T1 普通用户登录", False, "异常: %s" % str(e)[:200])
             shot(page, "T1_login_fail.png")
             ctx.close(); browser.close(); return
 
@@ -127,7 +136,7 @@ def main():
         try:
             ctx.clear_cookies()
             page.evaluate("localStorage.clear()")
-            login(page, "admin", "see-local-config")
+            login(page, "admin", E2E_ADMIN_PWD)
             record("T5 admin 登录", True, "")
         except Exception as e:
             record("T5 admin 登录", False, "异常: %s" % str(e)[:200])

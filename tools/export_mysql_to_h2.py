@@ -3,9 +3,11 @@
 
 用法：
     python export_mysql_to_h2.py --out <输出目录> [--mysql <mysql.exe>]
-                                 [--user root] [--password 123456] [--db design_db]
+                                 [--user <用户名>] [--password <MySQL 密码>] [--db design_db]
 
-说明：所有字符串列使用 HEX() 中转 + Python 解码为 UTF-8，彻底规避中文乱码与反斜杠转义问题；
+说明：数据库账号与密码不提供任何默认值，请通过 --user / --password 参数传入，
+      或预先设置 MYSQL_USERNAME / MYSQL_PWD（兼容 DESIGNMD_MYSQL_PWD）环境变量。
+      所有字符串列使用 HEX() 中转 + Python 解码为 UTF-8，彻底规避中文乱码与反斜杠转义问题；
       二进制列（brand.logo_data 等）使用 BIN:<hex> 中转，导出为 X'...' 字面量，保证图片二进制无损。
 """
 import argparse
@@ -131,10 +133,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True, help="H2 初始化脚本输出目录")
     ap.add_argument("--mysql", default=r"%MYSQL_HOME%\bin\mysql.exe")
-    ap.add_argument("--user", default="root")
-    ap.add_argument("--password", default="123456")
+    ap.add_argument("--user", default=os.environ.get("MYSQL_USERNAME") or os.environ.get("MYSQL_USER"),
+                    help="MySQL 用户名，默认读取 MYSQL_USERNAME / MYSQL_USER 环境变量")
+    ap.add_argument("--password", default=os.environ.get("MYSQL_PWD") or os.environ.get("DESIGNMD_MYSQL_PWD"),
+                    help="MySQL 密码，默认读取 MYSQL_PWD / DESIGNMD_MYSQL_PWD 环境变量；不提供明文默认值")
     ap.add_argument("--db", default="design_db")
     args = ap.parse_args()
+
+    if not args.user or not args.password:
+        ap.error("必须提供 MySQL 账号与密码：请传 --user / --password，或设置 MYSQL_USERNAME / MYSQL_PWD 环境变量（脚本不提供默认凭据）")
 
     out = os.path.abspath(args.out)
     os.makedirs(out, exist_ok=True)

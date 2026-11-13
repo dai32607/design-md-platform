@@ -77,12 +77,12 @@ class AuthControllerSliceTest {
 
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"username\":\"newbie\",\"password\":\"123456\",\"nickname\":\"新同学\"}"))
+                        .content("{\"username\":\"newbie\",\"password\":\"sample-pass\",\"nickname\":\"新同学\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.data.username").value("newbie"));
 
-        verify(userService).register("newbie", "123456", "新同学");
+        verify(userService).register("newbie", "sample-pass", "新同学");
     }
 
     @Test
@@ -91,11 +91,11 @@ class AuthControllerSliceTest {
         Map<String, Object> data = new HashMap<>();
         data.put("token", "jwt-token-value");
         data.put("user", user(7L, "alice", "USER"));
-        when(userService.login("alice", "123456")).thenReturn(data);
+        when(userService.login("alice", "sample-pass")).thenReturn(data);
 
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"username\":\"alice\",\"password\":\"123456\"}"))
+                        .content("{\"username\":\"alice\",\"password\":\"sample-pass\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.data.token").value("jwt-token-value"));
@@ -119,7 +119,7 @@ class AuthControllerSliceTest {
     void deleteAccountWithoutTokenIsRejected() throws Exception {
         mockMvc.perform(delete("/api/auth/account")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"password\":\"123456\"}"))
+                        .content("{\"password\":\"sample-pass\"}"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value(401));
     }
@@ -149,11 +149,11 @@ class AuthControllerSliceTest {
         mockMvc.perform(delete("/api/auth/account")
                         .header("Authorization", bearer(7L, "alice", "USER"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"password\":\"123456\"}"))
+                        .content("{\"password\":\"sample-pass\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0));
 
-        verify(userService).deleteAccount(7L, "123456");
+        verify(userService).deleteAccount(7L, "sample-pass");
     }
 
     private String bearer(Long userId, String username, String role) {

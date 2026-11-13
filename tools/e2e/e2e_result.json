@@ -6,7 +6,7 @@
   "failed": 0,
   "results": [
     {
-      "step": "T1 登录(test/see-local-config)",
+      "step": "T1 普通用户登录",
       "pass": true,
       "detail": "token 已写入 localStorage，进入首页"
     },

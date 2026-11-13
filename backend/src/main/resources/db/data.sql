@@ -7,7 +7,7 @@ INSERT INTO brand (id, name, logo_url, source, website, description) VALUES
 (3, 'Ant Design', 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg', 'system', 'https://ant.design/',
  'Ant Design — 蚂蚁集团开源的企业级 UI 设计语言和 React 组件库，提供完整的设计 Token 与企业级中后台解决方案。');
 
--- 默认管理员账号 admin / see-local-config（BCrypt 加密，角色 ADMIN）
+-- 默认管理员账号 admin：密码仅以 BCrypt 哈希形式存放，仓库不提供明文；非本地演示环境部署前必须重置密码与 JWT_SECRET
 INSERT INTO `user` (id, username, password, nickname, role) VALUES
 (1, 'admin', '$2b$10$Lcp4GpdKF2iJ8/c9/iDsNOcP9HEiBp0k47IneLxIU3bXyL5MOtBP6', '管理员', 'ADMIN');
 
