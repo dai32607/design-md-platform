@@ -3,6 +3,7 @@
 > 一个以 DESIGN.md 为唯一规范源的设计系统管理平台：AI一句话生成品牌设计规范，自动解析为结构化设计 Token，供页面与组件直接消费。
 
 [![CI](https://github.com/dai32607/design-md-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/dai32607/design-md-platform/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/dai32607/design-md-platform)](https://github.com/dai32607/design-md-platform/releases/tag/v1.0.0)
 
 ## 功能特性
 
@@ -32,6 +33,16 @@
 | Swagger UI | `http://localhost:8080/swagger-ui.html` |
 
 演示包 / 本地开发已放行 `/v3/api-docs/**`、`/swagger-ui/**`、`/swagger-ui.html`（免登录即可访问，便于联调）；**生产环境部署时应改为鉴权后访问**，避免对外暴露接口结构。
+
+## 离线演示包（免配置环境）
+
+不想安装 JDK / Maven / Node 也能直接体验：下载离线演示包，解压即用。
+
+- **内含**：前端与后端的编译产物，以及内置的精简 Java 运行时，无需另行安装 JDK、Maven 或 Node.js
+- **使用**：解压后双击「启动演示.bat」，服务就绪后自动打开 `http://localhost:8080`（端口被占用时自动改用 8090），无需任何额外环境配置
+- **演示账号**：普通用户 `test / test123`，管理员 `admin / admin123`
+- **无 API Key 也能用**：未配置大模型 API Key 时，AI 生成设计规范功能自动降级为内置演示快照，全流程依然可以完整体验
+- **下载**：[DesignMD-Demo.zip](https://github.com/dai32607/design-md-platform/releases/download/v1.0.0/DesignMD-Demo.zip)
 
 ## 快速启动
 
@@ -159,3 +170,7 @@ llm:
 ![品牌详情与 AI 预览](docs/screenshots/brand-detail.png)
 
 ![管理后台 Dashboard](docs/screenshots/dashboard.png)
+
+## 作者
+
+- 作者 GitHub 主页：<https://github.com/dai32607>
