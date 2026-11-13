@@ -53,7 +53,7 @@ mvn spring-boot:run          # 要求 JDK 17+；建议 JDK 21
 ```
 
 数据库连接在 `backend/src/main/resources/application.yml`：
-`jdbc:mysql://localhost:3306/design_db`，用户名与密码通过环境变量注入。
+`jdbc:mysql://localhost:3306/design_db`。用户名与密码通过环境变量 `MYSQL_USERNAME` / `MYSQL_PASSWORD` 注入，请在本地按实际环境配置，不要沿用示例默认值。
 
 ### 3. 启动前端（端口 3000）
 
@@ -67,10 +67,14 @@ npm run dev                  # 访问 http://localhost:3000
 
 ### 4. 演示账号
 
-| 账号 | 密码 | 角色 |
-|---|---|---|
-| admin | see-local-config | ADMIN（管理后台 / 全量权限） |
-| test | see-local-config | USER（可自建品牌并上传规范） |
+演示库初始化时内置两个账号，密码以 BCrypt 哈希形式存放在 `backend/src/main/resources/db-h2/data.sql`，不在此处公开：
+
+| 账号 | 角色 |
+|---|---|
+| admin | ADMIN（管理后台 / 全量权限） |
+| test | USER（可自建品牌并上传规范） |
+
+> 本地演示建议自行注册普通账号体验（可浏览 system 预置品牌）；如需管理员权限，请按 `data.sql` 中的账号初始化本地密码。任何非本地环境部署前，请务必更换管理员密码与 `JWT_SECRET`。
 
 ## 核心模块
 

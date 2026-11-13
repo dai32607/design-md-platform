@@ -35,7 +35,7 @@ if errorlevel 1 (
 
 echo    服务端口 : %PORT%
 echo    访问地址 : http://localhost:%PORT%
-echo    演示账号 : test / see-local-config        管理员 : admin / see-local-config
+echo    演示账号 : test（普通用户）/ admin（管理员），初始密码见随包 README.txt
 echo.
 echo    正在启动服务，请稍候（约 10 至 20 秒）...
 echo    启动期间请勿关闭本窗口，以及随后弹出的服务窗口。

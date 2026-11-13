@@ -11,14 +11,28 @@ rem 打包开始时间（Unix 秒，用于总耗时统计）
 for /f %%i in ('powershell -NoProfile -Command "[int]((Get-Date) - (Get-Date '1970-01-01Z')).TotalSeconds"') do set "T0=%%i"
 
 rem ==================== 可配置项（路径变化时改这里） ====================
+rem 以下为本机默认路径，换到其他机器时可用同名环境变量覆盖，无需改脚本
 set "JDK=%JAVA_HOME%"
+if defined JAVA_HOME set "JDK=%JAVA_HOME%"
+if defined DESIGNMD_JDK set "JDK=%DESIGNMD_JDK%"
 set "MVN=%MAVEN_HOME%\bin\mvn.cmd"
+if defined MAVEN_HOME set "MVN=%MAVEN_HOME%\bin\mvn.cmd"
+if defined DESIGNMD_MVN set "MVN=%DESIGNMD_MVN%"
 set "MYSQL_EXE=%MYSQL_HOME%\bin\mysql.exe"
+if defined MYSQL_HOME set "MYSQL_EXE=%MYSQL_HOME%\bin\mysql.exe"
 set "MYSQL_USER=root"
-set "MYSQL_PWD="
+if defined DESIGNMD_MYSQL_USER set "MYSQL_USER=%DESIGNMD_MYSQL_USER%"
+if not defined MYSQL_PWD (
+    if defined DESIGNMD_MYSQL_PWD set "MYSQL_PWD=%DESIGNMD_MYSQL_PWD%"
+)
+if not defined MYSQL_PWD (
+    echo [错误] 未设置 MySQL 密码：请先设置环境变量 DESIGNMD_MYSQL_PWD 后重新运行。
+    exit /b 1
+)
 set "MYSQL_DB=design_db"
 set "H2_JAR=%USERPROFILE%\.m2\repository\com\h2database\h2\2.4.240\h2-2.4.240.jar"
 set "NODE_DIR=%NODE_HOME%"
+if defined NODE_HOME set "NODE_DIR=%NODE_HOME%"
 set "DEMO_DIR=%USERPROFILE%\Desktop\DesignMD-Demo"
 set "DEMO_ZIP=%USERPROFILE%\Desktop\DesignMD-Demo.zip"
 rem ======================================================================
