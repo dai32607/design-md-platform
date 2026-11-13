@@ -1,3 +1,14 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: 7e31f3781dc8b267166eacacebe5c672_d1caf82adf4911f189bc525400248c00
+    ReservedCode1: 0uMOcNmhQnlfuySE3gpqALR3hYTSJoPi0P9RZhmxvWlVz0mP+bEcbSATYhENUqqqD5YR9JwIvmsJmqwnZR5J1qg+dBDhLnTjxZng5Ug1JVc+YBQp03140aRUkKE1pmr4WhzUB5z8c3pos2LQwCeK6IXD2F9fk9cLNu54h/7E8xYwjKo363qixV1tBsc=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: 7e31f3781dc8b267166eacacebe5c672_d1caf82adf4911f189bc525400248c00
+    ReservedCode2: 0uMOcNmhQnlfuySE3gpqALR3hYTSJoPi0P9RZhmxvWlVz0mP+bEcbSATYhENUqqqD5YR9JwIvmsJmqwnZR5J1qg+dBDhLnTjxZng5Ug1JVc+YBQp03140aRUkKE1pmr4WhzUB5z8c3pos2LQwCeK6IXD2F9fk9cLNu54h/7E8xYwjKo363qixV1tBsc=
+---
+
 # DesignMD 架构说明
 
 本文档描述 DesignMD（design-md-platform）当前代码的真实分层、认证模型、数据模型、AI 生成闭环与部署形态。所有内容均以仓库内源码与配置为准（`backend/src/main/java/com/designmd/platform`、`backend/src/main/resources`、`frontend/src`），不含未实现的设计设想。

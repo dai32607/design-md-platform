@@ -20,8 +20,8 @@ import zipfile
 
 SKIP_SUFFIX = (".lock.db", ".trace.db", ".temp")
 
-# 打包脚本本身只作 tools\demo-package 下的同源模板，不进入演示包
-TEMPLATE_EXCLUDE = ("打包演示包.bat",)
+# 打包脚本本身不进入演示包
+TEMPLATE_EXCLUDE = ("pack-demo.bat",)
 
 
 def log(msg):

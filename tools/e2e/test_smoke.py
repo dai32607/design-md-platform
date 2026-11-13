@@ -13,6 +13,7 @@ import sys
 import time
 import traceback
 from datetime import datetime
+from pathlib import Path
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -32,11 +33,29 @@ E2E_ADMIN_PWD = os.environ.get("E2E_ADMIN_PASSWORD", "")
 
 if not E2E_USER_PWD or not E2E_ADMIN_PWD:
     raise SystemExit("缺少登录凭据：请先设置 E2E_PASSWORD 与 E2E_ADMIN_PASSWORD 环境变量（仓库不提供默认密码）")
-# 完整版 Chromium 可执行文件（headless shell 因网络下载受限未装，直接用完整版跑 headless）
-CHROME_EXE = os.environ.get(
-    "P6_CHROME_EXE",
-    r"C:\Users\dyjn0\AppData\Local\ms-playwright\chromium-1243\chrome-win64\chrome.exe",
-)
+
+def _detect_chrome():
+    """浏览器内核定位：环境变量 P6_CHROME_EXE > ms-playwright 缓存 > 系统 Chrome/Edge。"""
+    if os.environ.get("P6_CHROME_EXE"):
+        return os.environ["P6_CHROME_EXE"]
+    pw_root = Path(os.environ.get("LOCALAPPDATA", "")) / "ms-playwright"
+    if pw_root.is_dir():
+        cands = sorted(pw_root.glob("chromium-*/chrome-win*/chrome.exe"))
+        if cands:
+            return str(cands[-1])
+    for cand in (
+        Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe"),
+        Path(r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"),
+        Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
+        Path(r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"),
+    ):
+        if cand.is_file():
+            return str(cand)
+    return ""
+
+
+CHROME_EXE = _detect_chrome() or None  # 为空时回退到 Playwright 自带内核
+
 SHOT_DIR = None
 results = []
 

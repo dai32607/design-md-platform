@@ -60,7 +60,7 @@ CREATE DATABASE design_db DEFAULT CHARACTER SET utf8mb4;
 
 ```bash
 cd backend
-mvn spring-boot:run          # 要求 JDK 17+；建议 JDK 21
+mvn spring-boot:run          # 要求 JDK 21（编译目标 21）
 ```
 
 数据库连接配置在 `backend/src/main/resources/application.yml`，默认连接 `jdbc:mysql://localhost:3306/design_db`；账号密码以占位符形式读取环境变量，仓库内不包含任何真实凭据：

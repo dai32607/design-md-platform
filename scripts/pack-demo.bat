@@ -1,9 +1,8 @@
 @echo off
 chcp 936 >nul
 setlocal EnableExtensions EnableDelayedExpansion
-cd /d "%~dp0"
-set "PROJ=%~dp0"
-if "%PROJ:~-1%"=="\" set "PROJ=%PROJ:~0,-1%"
+cd /d "%~dp0.."
+set "PROJ=%CD%"
 title DESIGN.md 离线演示包 - 一键重新打包
 set "PYTHONIOENCODING=gbk:replace"
 
@@ -13,11 +12,11 @@ for /f %%i in ('powershell -NoProfile -Command "[int]((Get-Date) - (Get-Date '19
 rem ==================== 可配置项（路径变化时改这里） ====================
 rem 以下为本机默认路径，换到其他机器时可用同名环境变量覆盖，无需改脚本
 set "JDK=%JAVA_HOME%"
-if defined JAVA_HOME set "JDK=%JAVA_HOME%"
 if defined DESIGNMD_JDK set "JDK=%DESIGNMD_JDK%"
-set "MVN=%MAVEN_HOME%\bin\mvn.cmd"
-if defined MAVEN_HOME set "MVN=%MAVEN_HOME%\bin\mvn.cmd"
+set "MVN="
 if defined DESIGNMD_MVN set "MVN=%DESIGNMD_MVN%"
+if not defined MVN if defined MAVEN_HOME set "MVN=%MAVEN_HOME%\bin\mvn.cmd"
+if not defined MVN for /f "delims=" %%i in ('where mvn 2^>nul') do if not defined MVN set "MVN=%%i"
 set "MYSQL_EXE=%MYSQL_HOME%\bin\mysql.exe"
 if defined MYSQL_HOME set "MYSQL_EXE=%MYSQL_HOME%\bin\mysql.exe"
 set "MYSQL_USER=root"
@@ -59,9 +58,6 @@ set "PY="
 if defined DESIGNMD_PYTHON set "PY=%DESIGNMD_PYTHON%"
 if not defined PY (
     where python >nul 2>&1 && set "PY=python"
-)
-if not defined PY (
-    for /f "delims=" %%i in ('powershell -NoProfile -Command "$p = Get-ChildItem \"$env:USERPROFILE\Desktop\Marvis\MarvisAgent\*\runtime\python311\python.exe\" -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | Select-Object -First 1; if($p){$p.FullName}"') do set "PY=%%i"
 )
 
 if not defined PY (

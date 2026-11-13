@@ -18,7 +18,7 @@
     <description>DESIGN.md 在线平台 - 收集展示各品牌设计系统规范</description>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <hutool.version>5.8.24</hutool.version>
         <jacoco.version>0.8.12</jacoco.version>

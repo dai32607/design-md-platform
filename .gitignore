@@ -30,3 +30,17 @@ runtime/
 *.iml
 .DS_Store
 Thumbs.db
+
+# ===== Python 缓存与字节码 =====
+__pycache__/
+*.pyc
+*.pyo
+
+# ===== 构建日志与端到端测试产物 =====
+build_log.txt
+build_out.txt
+tools/e2e/e2e_result.json
+tools/e2e/shots/
+
+# ===== 带日期的备份件 =====
+*.bak-*
