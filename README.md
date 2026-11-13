@@ -23,6 +23,8 @@
 | 前端 | Vue 3 · Vite 5 · Element Plus · Vue Router · ECharts |
 | AI | OpenAI 兼容 Chat Completions（DeepSeek 等可无缝切换）+ Mock 降级 |
 
+> 分层结构、认证与权限模型、设计 Token 数据模型、AI 生成闭环的实现细节见 [docs/architecture.md](docs/architecture.md)。
+
 ## API 文档（springdoc-openapi）
 
 后端集成 springdoc-openapi（Spring Boot 3.2 兼容版 `springdoc-openapi-starter-webmvc-ui`），仅扫描 `/api/**` 接口路径：
