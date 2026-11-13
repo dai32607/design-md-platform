@@ -4,8 +4,6 @@
 
 [![CI](https://github.com/dai32607/design-md-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/dai32607/design-md-platform/actions/workflows/ci.yml)
 
-> 徽章为占位符：推送到 GitHub 后请将 `dai32607/design-md-platform` 替换为实际仓库地址（如 `yourname/design-md-platform`）。
-
 ## 功能特性
 
 - **AI 生成设计规范闭环**：输入一句品牌描述（可指定色板），Agent 自动完成「LLM 生成 DESIGN.md → 创建品牌 → 解析 Token → 入库」全流程
