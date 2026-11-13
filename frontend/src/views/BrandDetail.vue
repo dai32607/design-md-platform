@@ -324,6 +324,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { getBrandById, getTokensByBrand, getTokenCategories, getDesignFiles, updateToken, deleteToken, uploadBrandLogo, updateUserBrand, deleteUserBrand } from '../api'
 import { List, PriceTag, EditPen, Operation, Grid, Document, MagicStick, Upload, Edit, Delete, CopyDocument, Search } from '@element-plus/icons-vue'
 import { avatarStyle, avatarLetter } from '../utils/brandAvatar'
+import { categoryLabel, isColorValue, getTypePreviewStyle, buildCssVariables } from '../utils/tokenStyle'
 
 const route = useRoute()
 const router = useRouter()
